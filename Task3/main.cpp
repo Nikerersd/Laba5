@@ -6,14 +6,22 @@
 
 using namespace std;
 
+enum trlstops {      //перечислимый тип, ввод с консоли числа
+    CREATE_TRL = 1,  
+    TRL_IN_STOP,
+    STOPS_IN_TRL,
+    TRLS,
+    EXIT
+};
+
 int main() {
     string command;
     cout << "Для ввода команд используйте следующий формат:" << endl;
-    cout << "CREATE_TRL trl stop1 .... stopn" << endl;
-    cout << "TRL_IN_STOP stop" << endl;
-    cout << "STOPS_IN_TRL trl" << endl;
-    cout << "TRLS" << endl;
-    cout << "Для завершения работы введите 'exit'" << endl;
+    cout << "(1): CREATE_TRL trl stop1 .... stopn" << endl;
+    cout << "(2): TRL_IN_STOP stop" << endl;
+    cout << "(3): STOPS_IN_TRL trl" << endl;
+    cout << "(4): TRLS" << endl;
+    cout << "(5): Завершение работы" << endl;
 
     while (true) {
         cout << "> ";
@@ -29,15 +37,23 @@ int main() {
         if (args.empty())
             continue;
 
-        if (args[0] == "exit")
+        int commandNum;
+        try {
+            commandNum = stoi(args[0]);
+        } catch (const exception& e) {
+            cout << "Ошибка: " << endl;
+            continue;
+        }
+
+        if (commandNum == trlstops::EXIT)
             break;
-        else if (args[0] == "CREATE_TRL")
+        else if (commandNum == trlstops::CREATE_TRL)
             create_Trl(args);
-        else if (args[0] == "TRL_IN_STOP")
+        else if (commandNum == trlstops::TRL_IN_STOP)
             trl_In_Stop(args);
-        else if (args[0] == "STOPS_IN_TRL")
+        else if (commandNum == trlstops::STOPS_IN_TRL)
             stops_In_Trl(args);
-        else if (args[0] == "TRLS")
+        else if (commandNum == trlstops::TRLS)
             Trls();
         else
             cout << "Неверная команда" << endl;

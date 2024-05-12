@@ -42,7 +42,8 @@ void markImmortal(int number_student) {
     if (it != suspicious_list.end()) {
         suspicious_list.erase(it);
         cout << "Student " << number_student << " is immortal!" << endl;
-    } else {
+    } 
+    else {
         cout << "Incorrect" << endl;
     }
 }

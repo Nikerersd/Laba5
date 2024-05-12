@@ -21,37 +21,40 @@ struct Item {
 // Класс для управления складом
 class Warehouse {
 private:
-    map<string, vector<Item>> cells; // Карта ячеек и содержащихся в них товаров
+    map<string, vector<Item>> cells; // Контейнер ячеек и содержащихся в них товаров
 
 public:
-    // Метод для добавления товара в ячейку
     void addItem(string itemName, int quantity, string cellAddress) {
         auto& items = cells[cellAddress]; // получаем ссылку на вектор товаров в данной ячейке
-        
+        int summ = 0;
+        for (auto& item : items) {
+            summ += item.quantity;
+        }
         // ищем товар с таким же именем
         for (auto& item : items) {
             if (item.name == itemName) {
                 // если товар найден, увеличиваем его количество
-                if (item.quantity + quantity <= MAX_ITEMS_PER_CELL) {
+                if (summ + quantity <= MAX_ITEMS_PER_CELL) {
                     item.quantity += quantity;
                     return;
-                } else {
+                } 
+                else {
                     cout << "Невозможно добавить товар " << itemName << " в ячейку " << cellAddress << ". Превышен лимит в " << MAX_ITEMS_PER_CELL << " единиц." << endl;
                     return;
                 }
             }
         }
         // если товар не найден, добавляем новый
-        if (items.size() < MAX_ITEMS_PER_CELL) {
+        if (summ + quantity <= MAX_ITEMS_PER_CELL) {
             items.push_back({itemName, quantity});
-        } else {
+        } 
+        else {
             cout << "Ячейка " << cellAddress << " заполнена. Невозможно добавить товар " << itemName << "." << endl;
         }
     }
 
-    // Метод для удаления товара из ячейки
     void removeItem(string itemName, int quantity, string cellAddress) {
-        for (auto it = cells[cellAddress].begin(); it != cells[cellAddress].end(); ++it) {
+        for (auto it = cells[cellAddress].begin(); it != cells[cellAddress].end(); it++) {
             if (it->name == itemName) {
                 if (it->quantity >= quantity) {
                     it->quantity -= quantity;
@@ -59,7 +62,8 @@ public:
                         cells[cellAddress].erase(it);
                     }
                     return;
-                } else {
+                }
+                else {
                     cout << "В ячейке " << cellAddress << " недостаточно товара " << itemName << "." << endl;
                     return;
                 }
@@ -68,7 +72,6 @@ public:
         cout << "В ячейке " << cellAddress << " нет товара " << itemName << "." << endl;
     }
 
-    // Метод для получения информации о состоянии склада
     void getInfo() {
         int totalItems = 0;
         int totalCells = NUM_ZONES * NUM_SHELVES_PER_ZONE * NUM_SECTIONS_PER_SHELF * NUM_SHELVES_PER_SECTION;

@@ -1,0 +1,15 @@
+C:\Users\nikru\OneDrive\Desktop\LabaRudk\Laba5\Task1#\bin\Debug\net8.0\Task1#.exe
+C:\Users\nikru\OneDrive\Desktop\LabaRudk\Laba5\Task1#\bin\Debug\net8.0\Task1#.deps.json
+C:\Users\nikru\OneDrive\Desktop\LabaRudk\Laba5\Task1#\bin\Debug\net8.0\Task1#.runtimeconfig.json
+C:\Users\nikru\OneDrive\Desktop\LabaRudk\Laba5\Task1#\bin\Debug\net8.0\Task1#.dll
+C:\Users\nikru\OneDrive\Desktop\LabaRudk\Laba5\Task1#\bin\Debug\net8.0\Task1#.pdb
+C:\Users\nikru\OneDrive\Desktop\LabaRudk\Laba5\Task1#\obj\Debug\net8.0\Task1#.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nikru\OneDrive\Desktop\LabaRudk\Laba5\Task1#\obj\Debug\net8.0\Task1#.AssemblyInfoInputs.cache
+C:\Users\nikru\OneDrive\Desktop\LabaRudk\Laba5\Task1#\obj\Debug\net8.0\Task1#.AssemblyInfo.cs
+C:\Users\nikru\OneDrive\Desktop\LabaRudk\Laba5\Task1#\obj\Debug\net8.0\Task1#.csproj.CoreCompileInputs.cache
+C:\Users\nikru\OneDrive\Desktop\LabaRudk\Laba5\Task1#\obj\Debug\net8.0\Task1#.sourcelink.json
+C:\Users\nikru\OneDrive\Desktop\LabaRudk\Laba5\Task1#\obj\Debug\net8.0\Task1#.dll
+C:\Users\nikru\OneDrive\Desktop\LabaRudk\Laba5\Task1#\obj\Debug\net8.0\refint\Task1#.dll
+C:\Users\nikru\OneDrive\Desktop\LabaRudk\Laba5\Task1#\obj\Debug\net8.0\Task1#.pdb
+C:\Users\nikru\OneDrive\Desktop\LabaRudk\Laba5\Task1#\obj\Debug\net8.0\Task1#.genruntimeconfig.cache
+C:\Users\nikru\OneDrive\Desktop\LabaRudk\Laba5\Task1#\obj\Debug\net8.0\ref\Task1#.dll

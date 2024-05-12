@@ -48,9 +48,6 @@ void create_Trl(const vector<string>& args) {
         }
     }
 
-    // Очищаем данные об остановках, если троллейбус создается заново
-    trolleys[name].stops.clear();
-
     trolleys[name].name = name;
     for (const string& stop : newStops) {
         trolleys[name].stops.push_back(stop);

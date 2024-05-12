@@ -1,87 +1,85 @@
 #include <iostream>
-#include <queue>
 #include <vector>
+#include <queue>
+#include <string>
+#include <functional>
 #include <algorithm>
-#include <random>
-#include <iomanip> // Для форматирования вывода
 
 using namespace std;
 
-// Структура для хранения информации о посетителе
 struct Visitor {
-    string id; // Номер талона
-    int duration; // Продолжительность посещения
-    Visitor(const string& _id, int _duration) : id(_id), duration(_duration) {}
+    string ticket;
+    int duration;
 };
 
-// Функция для сортировки посетителей по продолжительности
-bool compareVisitor(const Visitor &a, const Visitor &b) {
-    return a.duration < b.duration;
-}
+class ClinicQueue {
+private:
+    int num_windows;
+    vector<queue<Visitor>> windows;
+    vector<Visitor> visitors;
+    int visitorCounter = 0;
+
+    string generateTicket() {
+        return "T" + to_string(100 + (visitorCounter++ % 900));
+    }
+
+public:
+    ClinicQueue(int numWindows): num_windows(numWindows), windows(numWindows) {}
+
+    void enqueue(int duration) {
+        string ticket = generateTicket();
+        visitors.push_back({ticket, duration});
+        cout << ticket << endl;
+    }
+
+    void distribute() {
+        vector<int> load(num_windows, 0);
+
+        // Сортировка посетителей по убыванию продолжительности для оптимизации распределения максимальной нагрузки
+        sort(visitors.begin(), visitors.end(), [](Visitor &a, Visitor &b) {
+            return a.duration > b.duration;
+        });
+
+        for (Visitor &v : visitors) {
+            int minWindow = distance(load.begin(), min_element(load.begin(), load.end()));
+            load[minWindow] += v.duration;
+            windows[minWindow].push(v);
+        }
+
+        for (int i = 0; i < num_windows; ++i) {
+            cout << "Окно " << (i + 1) << " (";
+            int totalTime = 0;
+            bool first = true;
+            while (!windows[i].empty()) {
+                if (!first) cout << ", ";
+                first = false;
+                Visitor v = windows[i].front(); 
+                windows[i].pop();
+                cout << v.ticket;
+                totalTime += v.duration;
+            }
+            cout << ") " << totalTime << " минут" << endl;
+        }
+    }
+};
 
 int main() {
-    int numWindows;
-    cout << "Введите количество окон: ";
-    cin >> numWindows;
-
-    vector<queue<Visitor>> windows(numWindows); // Вектор очередей для каждого окна
-
-    random_device rd; // Инициализация генератора случайных чисел
-    mt19937 gen(rd()); // Мерсенн Твист
-    uniform_int_distribution<> dis(0, 999); // Равномерное распределение в диапазоне от 0 до 999
+    int num_windows;
+    cout << "Введите кол-во окон: ";
+    cin >> num_windows;
+    ClinicQueue queue(num_windows);
 
     string command;
     while (true) {
-        cout << "<<< ";
         cin >> command;
-        
         if (command == "ENQUEUE") {
             int duration;
             cin >> duration;
-            
-            string visitorID = "T" + to_string(dis(gen)); // Генерация случайного номера талона
-            
-            Visitor visitor(visitorID, duration);
-
-            // Поиск окна с минимальной очередью
-            auto minWindow = min_element(windows.begin(), windows.end(),
-                [](const queue<Visitor> &a, const queue<Visitor> &b) {
-                    return a.size() < b.size();
-                });
-            
-            // Добавление посетителя в очередь выбранного окна
-            minWindow->push(visitor);
-            
-            // Вывод номера талона
-            cout << ">>> " << visitor.id << endl;
+            queue.enqueue(duration);
         } else if (command == "DISTRIBUTE") {
-            // Сортировка посетителей в каждой очереди по продолжительности
-            for (auto &window : windows) {
-                vector<Visitor> visitors;
-                while (!window.empty()) {
-                    visitors.push_back(window.front());
-                    window.pop();
-                }
-                sort(visitors.begin(), visitors.end(), compareVisitor);
-                for (const auto &visitor : visitors) {
-                    window.push(visitor);
-                }
-            }
-            
-            // Вывод распределения посетителей на окна
-            for (int i = 0; i < numWindows; ++i) {
-                int totalDuration = 0;
-                cout << ">>> Окно " << i + 1 << ": ";
-                while (!windows[i].empty()) {
-                    totalDuration += windows[i].front().duration;
-                    cout << setw(4) << windows[i].front().id << ", ";
-                    windows[i].pop();
-                }
-                cout << "(" << totalDuration << " минут): " << endl;
-            }
+            queue.distribute();
             break;
         }
     }
-
     return 0;
 }
